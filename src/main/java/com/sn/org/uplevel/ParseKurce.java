@@ -8,11 +8,43 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class ParseKurce {
+public class ParseKurce extends Thread implements Observed {
+    private  List<Valuta> valutas=new ArrayList<>();
+    private int time;
 
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+    Observer observer=new HelloController();
+    @Override
+    public void run() {
+        super.run();
+        do {
+            try {
+                valutas=kursPars();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            notifyObserver();
+           // LocalDateTime localDateTime=LocalDateTime.now();
+            //System.out.println(localDateTime);
+            try {
+                sleep(time*1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }while (true);
+    }
 
     public  List<Valuta> kursPars() throws IOException {
         String url = "https://minfin.com.ua/currency/" ;
@@ -32,4 +64,9 @@ public class ParseKurce {
       return valutas;
     }
 
+    @Override
+    public void notifyObserver() {
+
+        observer.handleEvent(valutas);
+    }
 }
