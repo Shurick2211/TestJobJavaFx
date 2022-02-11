@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: bfe8ac;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sn.org.uplevel.HelloController">
+<children>
+      <TabPane prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Calcuilation">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="amount" layoutX="14.0" layoutY="57.0" />
+                        <Label layoutX="14.0" layoutY="40.0" text="Amount">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="450.0" layoutY="40.0" text="To">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="218.0" layoutY="40.0" text="From">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <SplitMenuButton fx:id="valuta1" layoutX="218.0" layoutY="57.0" mnemonicParsing="false" text="SplitMenuButton">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </SplitMenuButton>
+                        <SplitMenuButton fx:id="valuta2" layoutX="450.0" layoutY="57.0" mnemonicParsing="false" text="SplitMenuButton">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Action 1" />
+                              <MenuItem mnemonicParsing="false" text="Action 2" />
+                           </items>
+                        </SplitMenuButton>
+                        <Button layoutX="385.0" layoutY="57.0" mnemonicParsing="false" onAction="#change" text="=">
+
+                        </Button>
+                        <Button layoutX="528.0" layoutY="107.0" mnemonicParsing="false" onAction="#convert" text="Convert" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Kurs">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableView" prefHeight="447.0" prefWidth="352.0">
+                          <columns>
+                            <TableColumn fx:id="valName" prefWidth="167.0" text="Money" />
+                            <TableColumn fx:id="valKurs" prefWidth="184.0" text="Kurs" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="time" layoutX="504.0" layoutY="31.0" prefHeight="25.0" prefWidth="43.0" />
+                        <Label layoutX="395.0" layoutY="35.0" prefHeight="17.0" prefWidth="119.0" text="Time to refresh" />
+                        <Label layoutX="572.0" layoutY="35.0" text="sec." />
+                        <Button layoutX="566.0" layoutY="80.0" mnemonicParsing="false" onAction="#apply" text="Apply" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
