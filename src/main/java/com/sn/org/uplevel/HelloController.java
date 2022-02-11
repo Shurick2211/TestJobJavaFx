@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -58,7 +59,20 @@ public class HelloController implements Observer{
         valKurs.setCellValueFactory(n->new SimpleStringProperty(n.getValue().getKurs()+""));
 
 
-        valuta1.getItems().addAll(valutas.stream().map(v->new MenuItem(v.getName())).collect(Collectors.toList()));
+       // valuta1.getItems().addAll(valutas.stream().map(v->new MenuItem(v.getName())).collect(Collectors.toList()));
+
+
+    }
+    private boolean isNotEmpty=false;
+    @FXML
+    void select() {
+        if(!isNotEmpty) {
+            for (Valuta v : valutas) {
+                valuta1.getItems().addAll(new MenuItem(v.getName()));
+                valuta2.getItems().addAll(new MenuItem(v.getName()));
+            }
+            isNotEmpty=true;
+        }
 
 
 
@@ -87,6 +101,7 @@ System.out.println("change");
     public void handleEvent(List<Valuta> valutaList) {
         valutas.clear();
         valutas.addAll(valutaList);
+
 
 
     }

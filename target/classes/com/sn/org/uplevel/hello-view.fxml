@@ -28,10 +28,10 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <SplitMenuButton fx:id="valuta1" layoutX="218.0" layoutY="57.0" mnemonicParsing="false" text="SplitMenuButton">
+                        <SplitMenuButton fx:id="valuta1" layoutX="218.0" layoutY="57.0" mnemonicParsing="false" onAction="#select" onInputMethodTextChanged="#select" onKeyTyped="#select" text="Select">
 
                         </SplitMenuButton>
-                        <SplitMenuButton fx:id="valuta2" layoutX="450.0" layoutY="57.0" mnemonicParsing="false" text="SplitMenuButton">
+                        <SplitMenuButton fx:id="valuta2" layoutX="450.0" layoutY="57.0" mnemonicParsing="false" onAction="#select" text="Select">
 
                         </SplitMenuButton>
                         <Button layoutX="385.0" layoutY="57.0" mnemonicParsing="false" onAction="#change" text="=">
