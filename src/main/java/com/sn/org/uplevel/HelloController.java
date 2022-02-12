@@ -14,9 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +43,7 @@ public class HelloController implements Observer{
     TableColumn<Valuta,String> valName;
     @FXML Label rezult;
     @FXML Label errEnter;
-
+    @FXML Button change;
 
 
     public static    ObservableList<Valuta> valutas = FXCollections.observableArrayList();
@@ -50,10 +52,15 @@ public class HelloController implements Observer{
 
 
     ParseKurce parseKurce;
-    public void initialize() throws InterruptedException {
+    public void initialize()  {
+        change.setShape(new Circle(15));
+        char st='\u21C4';
+        change.setText(st+"");
+
 
         parseKurce=new ParseKurce();
         parseKurce.setTime(50);
+        time.setText("50");
         parseKurce.start();
 
         tableView.itemsProperty().setValue(valutas);
@@ -77,7 +84,7 @@ public class HelloController implements Observer{
 
     @FXML
     void change() {
-        if(valuta2.getValue()!=null&valuta1.getValue()!=null) {
+        if(valuta2.getValue()!=null&&valuta1.getValue()!=null&&!valutas.isEmpty()) {
             int v1 = valuta1.getSelectionModel().getSelectedIndex();
             int v2 = valuta2.getSelectionModel().getSelectedIndex();
             valuta1.setValue(valuta1.getItems().get(v2));
@@ -122,6 +129,7 @@ public class HelloController implements Observer{
     public  synchronized void  handleEvent(List<Valuta> valutaList) {
 
         valutas.setAll(valutaList);
+        valutas.add(new Valuta("UAN", 1.0F));
        select();
 
     }

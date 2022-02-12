@@ -65,7 +65,7 @@ public class ParseKurce extends Thread implements Observed {
     }
 
     @Override
-    public void notifyObserver() {
+    public synchronized void notifyObserver() {
 
         observer.handleEvent(valutas);
     }

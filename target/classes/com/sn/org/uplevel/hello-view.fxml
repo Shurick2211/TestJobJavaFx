@@ -36,9 +36,10 @@
                            </font>
                         </Label>
 
-                        <Button layoutX="396.0" layoutY="57.0" mnemonicParsing="false" onAction="#change" text="=">
-
-                        </Button>
+                        <Button fx:id="change" layoutX="389.0" layoutY="50.0" mnemonicParsing="false" onAction="#change" text="=">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Button>
                         <Button layoutX="542.0" layoutY="109.0" mnemonicParsing="false" onAction="#convert" text="Convert" />
                         <Label fx:id="rezult" layoutX="14.0" layoutY="111.0" prefHeight="17.0" prefWidth="139.0">
                            <font>
