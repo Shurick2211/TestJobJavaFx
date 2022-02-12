@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Thread.sleep;
+
 
 public class HelloController implements Observer{
     @FXML
@@ -28,9 +30,9 @@ public class HelloController implements Observer{
     @FXML
     TextField  time;
     @FXML
-    SplitMenuButton valuta1;
+    ChoiceBox<Valuta> valuta1;
     @FXML
-    SplitMenuButton valuta2;
+    ChoiceBox<Valuta> valuta2;
     @FXML
     TableView tableView;
     @FXML
@@ -38,7 +40,7 @@ public class HelloController implements Observer{
     @FXML
     TableColumn<Valuta,String> valName;
     @FXML Label rezult;
-
+    @FXML Label errEnter;
 
 
 
@@ -48,7 +50,7 @@ public class HelloController implements Observer{
 
 
     ParseKurce parseKurce;
-    public void initialize(){
+    public void initialize() throws InterruptedException {
 
         parseKurce=new ParseKurce();
         parseKurce.setTime(5);
@@ -59,20 +61,13 @@ public class HelloController implements Observer{
         valKurs.setCellValueFactory(n->new SimpleStringProperty(n.getValue().getKurs()+""));
 
 
-       // valuta1.getItems().addAll(valutas.stream().map(v->new MenuItem(v.getName())).collect(Collectors.toList()));
-
-
+        valuta1.setItems(valutas);
+        valuta2.setItems(valutas);
     }
-    private boolean isNotEmpty=false;
+
     @FXML
     void select() {
-        if(!isNotEmpty) {
-            for (Valuta v : valutas) {
-                valuta1.getItems().addAll(new MenuItem(v.getName()));
-                valuta2.getItems().addAll(new MenuItem(v.getName()));
-            }
-            isNotEmpty=true;
-        }
+
 
 
 

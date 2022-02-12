@@ -30,6 +30,6 @@ public class Valuta {
 
     @Override
     public String toString() {
-        return "Name:"+name+" Kurs:"+kurs;
+        return name+":  "+kurs;
     }
 }
