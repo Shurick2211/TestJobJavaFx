@@ -120,7 +120,7 @@ public class HelloController implements Observer{
             rez = am / valuta2.getValue().getKurs() *
                     valuta1.getValue().getKurs();
 
-            rezult.setText(rez + "");
+            rezult.setText(valuta2.getValue().getName()+": "+rez);
         }else  rezult.setText("Select from & to");
     }
 
