@@ -44,7 +44,7 @@ public class HelloController implements Observer{
 
 
 
-    public static ObservableList<Valuta> valutas = FXCollections.observableArrayList();
+    public static    ObservableList<Valuta> valutas = FXCollections.observableArrayList();
     int timer;
 
 
@@ -53,7 +53,7 @@ public class HelloController implements Observer{
     public void initialize() throws InterruptedException {
 
         parseKurce=new ParseKurce();
-        parseKurce.setTime(5);
+        parseKurce.setTime(50);
         parseKurce.start();
 
         tableView.itemsProperty().setValue(valutas);
@@ -63,10 +63,12 @@ public class HelloController implements Observer{
 
         valuta1.setItems(valutas);
         valuta2.setItems(valutas);
+        amount.setText("1");
+
     }
 
-    @FXML
-    void select() {
+
+    public void  select() {
 
 
 
@@ -75,29 +77,52 @@ public class HelloController implements Observer{
 
     @FXML
     void change() {
-System.out.println("change");
+        if(valuta2.getValue()!=null&valuta1.getValue()!=null) {
+            int v1 = valuta1.getSelectionModel().getSelectedIndex();
+            int v2 = valuta2.getSelectionModel().getSelectedIndex();
+            valuta1.setValue(valuta1.getItems().get(v2));
+            valuta2.setValue(valuta1.getItems().get(v1));
+        }
     }
 
 
 
     @FXML
     void apply() {
-        timer=Integer.parseInt(time.getText());
-        parseKurce.setTime(timer);
+        try {
+            timer = Integer.parseInt(time.getText());
+            parseKurce.setTime(timer);
+            errEnter.setText("");
+        }catch (Exception e){
+            errEnter.setText("Enter number");
+        }
     }
 
     @FXML
     void convert(){
-        rezult.setText("rezult");
+
+
+        float am=1;
+        try {
+            am = Float.parseFloat(amount.getText());
+        }catch (Exception e){
+            rezult.setText("Error to enter");
+        }
+        float rez=0;
+        if(valuta2.getValue()!=null&valuta1.getValue()!=null) {
+            rez = am / valuta2.getValue().getKurs() *
+                    valuta1.getValue().getKurs();
+
+            rezult.setText(rez + "");
+        }else  rezult.setText("Select from & to");
     }
 
 
     @Override
-    public void handleEvent(List<Valuta> valutaList) {
-        valutas.clear();
-        valutas.addAll(valutaList);
+    public  synchronized void  handleEvent(List<Valuta> valutaList) {
 
-
+        valutas.setAll(valutaList);
+       select();
 
     }
 }
