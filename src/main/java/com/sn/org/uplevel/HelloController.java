@@ -34,9 +34,10 @@ public class HelloController implements Observer<List<Valuta>> {
     @FXML Label rezult;
     @FXML Label errEnter;
     @FXML Button change;
-  //  Thread thread=Thread.currentThread();
+
 
    private static ObservableList<Valuta> valutas = FXCollections.observableArrayList();
+
     int timer;
 
     ParseKurce parseKurce;
@@ -56,9 +57,7 @@ public class HelloController implements Observer<List<Valuta>> {
         valName.setCellValueFactory(n->new SimpleStringProperty(n.getValue().getName()));
         valKurs.setCellValueFactory(n->new SimpleStringProperty(n.getValue().getKurs()+""));
 
-
         valuta1.setItems(valutas);
-
         valuta2.setItems(valutas);
         amount.setText("1");
 
@@ -121,8 +120,8 @@ public class HelloController implements Observer<List<Valuta>> {
     @Override
     public  void onNext(List<Valuta> valutass) {
 
-            valutas.setAll(valutass);
-            valutas.add(new Valuta("UAN", 1F));
+        valutas.setAll(valutass);
+        valutas.add(new Valuta("UAN", 1F));
 
     }
 }
