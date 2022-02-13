@@ -11,6 +11,7 @@ module com.sn.org.uplevel {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires org.jsoup;
+    requires rxjava;
 
     opens com.sn.org.uplevel to javafx.fxml;
     exports com.sn.org.uplevel;

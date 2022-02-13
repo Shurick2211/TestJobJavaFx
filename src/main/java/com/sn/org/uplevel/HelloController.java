@@ -1,32 +1,22 @@
 package com.sn.org.uplevel;
 
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
+import rx.Observer;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.lang.Thread.sleep;
+import java.util.ListIterator;
 
 
-public class HelloController implements Observer{
+public class HelloController implements Observer<List<Valuta>> {
     @FXML
     TextField amount;
     @FXML
@@ -44,14 +34,13 @@ public class HelloController implements Observer{
     @FXML Label rezult;
     @FXML Label errEnter;
     @FXML Button change;
+  //  Thread thread=Thread.currentThread();
 
-
-    public static    ObservableList<Valuta> valutas = FXCollections.observableArrayList();
+   private static ObservableList<Valuta> valutas = FXCollections.observableArrayList();
     int timer;
 
-
-
     ParseKurce parseKurce;
+
     public void initialize()  {
         change.setShape(new Circle(15));
         char st='\u21C4';
@@ -69,26 +58,22 @@ public class HelloController implements Observer{
 
 
         valuta1.setItems(valutas);
+
         valuta2.setItems(valutas);
         amount.setText("1");
 
     }
 
 
-    public void  select() {
 
-
-
-
-    }
 
     @FXML
     void change() {
-        if(valuta2.getValue()!=null&&valuta1.getValue()!=null&&!valutas.isEmpty()) {
-            int v1 = valuta1.getSelectionModel().getSelectedIndex();
-            int v2 = valuta2.getSelectionModel().getSelectedIndex();
-            valuta1.setValue(valuta1.getItems().get(v2));
-            valuta2.setValue(valuta1.getItems().get(v1));
+        if(valuta2.getValue()!=null&&valuta1.getValue()!=null) {
+           Valuta v1=valuta1.getValue();
+           Valuta v2=valuta2.getValue();
+            valuta1.setValue(v2);
+            valuta2.setValue(v1);
         }
     }
 
@@ -108,7 +93,6 @@ public class HelloController implements Observer{
     @FXML
     void convert(){
 
-
         float am=1;
         try {
             am = Float.parseFloat(amount.getText());
@@ -124,13 +108,21 @@ public class HelloController implements Observer{
         }else  rezult.setText("Select from & to");
     }
 
+    @Override
+    public void onCompleted() {
+        System.out.println("Data here!");
+    }
 
     @Override
-    public  synchronized void  handleEvent(List<Valuta> valutaList) {
+    public void onError(Throwable throwable) {
+        System.out.println("Error data!");
+    }
 
-        valutas.setAll(valutaList);
-        valutas.add(new Valuta("UAN", 1.0F));
-       select();
+    @Override
+    public  void onNext(List<Valuta> valutass) {
+
+            valutas.setAll(valutass);
+            valutas.add(new Valuta("UAN", 1F));
 
     }
 }

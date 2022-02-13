@@ -4,16 +4,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import rx.Observable;
+import rx.Observer;
+import rx.subjects.PublishSubject;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-public class ParseKurce extends Thread implements Observed {
+public class ParseKurce extends Thread  {
     private  List<Valuta> valutas=new ArrayList<>();
     private int time;
 
@@ -23,18 +23,26 @@ public class ParseKurce extends Thread implements Observed {
 
     public void setTime(int time) {
         this.time = time;
+
     }
-    Observer observer=new HelloController();
+    Observer<List<Valuta>> observer=new HelloController();
+
+    PublishSubject<List<Valuta>> observable=PublishSubject.create();
+    {observable.subscribe(observer);}
+
     @Override
     public void run() {
         super.run();
         do {
             try {
                 valutas=kursPars();
+                observable.onNext(valutas);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            notifyObserver();
+
            // LocalDateTime localDateTime=LocalDateTime.now();
             //System.out.println(localDateTime);
             try {
@@ -64,9 +72,5 @@ public class ParseKurce extends Thread implements Observed {
       return valutas;
     }
 
-    @Override
-    public synchronized void notifyObserver() {
 
-        observer.handleEvent(valutas);
-    }
 }
