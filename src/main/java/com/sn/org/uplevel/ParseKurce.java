@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParseKurce extends Thread  {
-    private  List<Valuta> valutas=new ArrayList<>();
+    private  List<Valuta> valutas = HelloController.valutas;
     private int time;
 
     public int getTime() {
@@ -32,26 +32,28 @@ public class ParseKurce extends Thread  {
 
     @Override
     public void run() {
-        super.run();
-        do {
-            try {
-                valutas=kursPars();
-                observable.onNext(valutas);
+        synchronized (valutas) {
+            super.run();
+            do {
+                try {
+                    valutas = kursPars();
+                    observable.onNext(valutas);
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-           // LocalDateTime localDateTime=LocalDateTime.now();
-            //System.out.println(localDateTime);
-            try {
-                sleep(time*1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                // LocalDateTime localDateTime=LocalDateTime.now();
+                //System.out.println(localDateTime);
+                try {
+                    sleep(time * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-        }while (true);
+            } while (true);
+        }
     }
 
     public  List<Valuta> kursPars() throws IOException {
@@ -65,7 +67,6 @@ public class ParseKurce extends Thread  {
             Valuta valuta=new Valuta(tdName.get(i).text(),
                     Float.parseFloat(tdKurs.get(i).text().split(" ")[0].replace("000","")));
             valutas.add(valuta);
-
         }
 
        // valutas.forEach(System.out::println);

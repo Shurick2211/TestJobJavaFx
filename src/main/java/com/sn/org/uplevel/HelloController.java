@@ -36,7 +36,7 @@ public class HelloController implements Observer<List<Valuta>> {
     @FXML Button change;
 
 
-   private static ObservableList<Valuta> valutas = FXCollections.observableArrayList();
+   public static ObservableList<Valuta> valutas = FXCollections.observableArrayList();
 
     int timer;
 
@@ -118,7 +118,7 @@ public class HelloController implements Observer<List<Valuta>> {
     }
 
     @Override
-    public  void onNext(List<Valuta> valutass) {
+    public void onNext(List<Valuta> valutass) {
 
         valutas.setAll(valutass);
         valutas.add(new Valuta("UAN", 1F));
