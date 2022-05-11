@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParseKurce extends Thread  {
-    private  List<Valuta> valutas = HelloController.valutas;
+    private  List<Valuta> valutas;
     private int time;
 
     public int getTime() {
@@ -32,7 +32,7 @@ public class ParseKurce extends Thread  {
 
     @Override
     public void run() {
-        synchronized (valutas) {
+        synchronized (observer) {
             super.run();
             do {
                 try {
@@ -52,7 +52,7 @@ public class ParseKurce extends Thread  {
                     e.printStackTrace();
                 }
 
-            } while (true);
+            } while (!Thread.interrupted());
         }
     }
 
